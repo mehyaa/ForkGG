@@ -56,7 +56,7 @@
     <div class="flex flex-col gap-4 overflow-auto scroll-hidden mt-7 items-center @(EntityState?.Entity.Status == EntityStatus.Stopped ? "opacity-20" : "")">
 
         <div class="flex flex-col w-24 items-center">
-            <div class="flex items-center justify-center w-full bg-gradient-to-t from-percentage-p@(Math.Min(CpuPercentage - CpuPercentage % 10, 100))/10 to-percentage-p10/0 p-3 text-percentage-p@(Math.Min(CpuPercentage - CpuPercentage % 10, 100))">
+            <div class="flex items-center justify-center w-full bg-linear-to-t from-percentage-p@(Math.Min(CpuPercentage - CpuPercentage % 10, 100))/10 to-percentage-p10/0 p-3 text-percentage-p@(Math.Min(CpuPercentage - CpuPercentage % 10, 100))">
                 <span class="text-2xl font-bold">@CpuPercentage.ToString()</span>
                 <span class="text-sm opacity-75">&nbsp%</span>
             </div>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="flex flex-col w-24 items-center">
-            <div class="flex items-center justify-center w-full bg-gradient-to-t from-percentage-p@(Math.Min(MemoryPercentage - MemoryPercentage % 10, 100))/10 to-percentage-p10/0 p-3 text-percentage-p@(Math.Min(MemoryPercentage - MemoryPercentage % 10, 100))">
+            <div class="flex items-center justify-center w-full bg-linear-to-t from-percentage-p@(Math.Min(MemoryPercentage - MemoryPercentage % 10, 100))/10 to-percentage-p10/0 p-3 text-percentage-p@(Math.Min(MemoryPercentage - MemoryPercentage % 10, 100))">
                 <span class="text-2xl font-bold">@MemoryPercentage.ToString()</span>
                 <span class="text-sm opacity-75">&nbsp%</span>
             </div>
@@ -74,7 +74,7 @@
         </div>
 
         <div class="flex flex-col w-24 items-center">
-            <div class="flex items-center justify-center w-full bg-gradient-to-t from-percentage-p0/10 to-percentage-p0/0 p-3 text-percentage-p0">
+            <div class="flex items-center justify-center w-full bg-linear-to-t from-percentage-p0/10 to-percentage-p0/0 p-3 text-percentage-p0">
                 <span class="text-2xl font-bold">@Uptime.TotalHours.ToString("0")</span>
                 <span class="text-sm opacity-75">h</span>&nbsp
                 <span class="text-2xl font-bold">@Uptime.Minutes.ToString("0")</span>

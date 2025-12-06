@@ -12,11 +12,11 @@
 @inject ApplicationStateManager ApplicationState;
 @inject CreateEntityConnectionService CreateEntityConnection;
 
-<div class="flex flex-col h-full">
+<div class="flex flex-col h-full overflow-auto">
 
     @* Main *@
     <EditForm Model="_serverPayload">
-        <div class="flex-1 bg-new-panel max-w-5xl p-4 overflow-auto">
+        <div class="flex-1 bg-new-panel max-w-5xl p-4">
             <span class="text-lg font-bold ">Create A Server</span>
             <div class="px-4 pb-10">
                 <div>
@@ -28,7 +28,8 @@
 
                 <div>
                     <ForkSelect Name="ServerVersion" @bind-Value="_serverPayload.ServerVersion"
-                                TModelValue="ServerVersion" Loading="@ServerVersionsLoadingTasksByType.ContainsKey(SelectedVersionType)"
+                                TModelValue="ServerVersion"
+                                Loading="@ServerVersionsLoadingTasksByType.ContainsKey(SelectedVersionType)"
                                 Values="Versions" Label="Choose Version">
                     </ForkSelect>
                 </div>
@@ -59,7 +60,8 @@
                 </div>
             </div>
 
-            <IconButton Size="45" OnClickMethod="OnCreateEntity" IsDisabled="@ServerVersionsLoadingTasksByType.ContainsKey(SelectedVersionType)">
+            <IconButton Size="45" OnClickMethod="OnCreateEntity"
+                        IsDisabled="@ServerVersionsLoadingTasksByType.ContainsKey(SelectedVersionType)">
                 <Icon>
                     <CreateIcon Height="24" Width="24"/>
                 </Icon>

@@ -1,6 +1,201 @@
-﻿@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@config '../../tailwind.config.js';
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentcolor);
+    }
+}
+
+@utility icon-button {
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%);
+}
+
+@utility clipping {
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        @apply bg-fork-blue-dark;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        @apply bg-fork-blue-dark;
+    }
+
+    & > div {
+        z-index: 1;
+        position: relative;
+    }
+
+    & > div {
+        z-index: 1;
+        position: relative;
+    }
+}
+
+@utility console-out-container {
+    &::before {
+        clip-path: polygon(
+                0 0,
+                calc(100% - 136px) 0,
+                calc(100% - 90px) 48px,
+                100% 48px,
+                100% 100%,
+                0 100%
+        );
+    }
+}
+
+@utility console-in-container {
+    &::before {
+        clip-path: polygon(0 25px, 50px 25px, 75px 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+@utility performance-background {
+    &::before {
+        clip-path: polygon(
+                0 0,
+                100% 0,
+                100% calc(100% - 40px),
+                calc(100% - 40px) 100%,
+                0 100%
+        );
+    }
+}
+
+@utility ip-container {
+    &::before {
+        clip-path: polygon(0 25px, 60px 25px, 85px 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+@utility performance-container {
+    min-height: 112px;
+}
+
+@utility clip-bottom-right {
+    clip-path: polygon(
+            0 0,
+            100% 0,
+            100% calc(100% - 10px),
+            calc(100% - 10px) 100%,
+            0 100%
+    );
+}
+
+@utility clip-top-left {
+    clip-path: polygon(0 8px, 20px 8px, 30px 0, 100% 0, 100% 100%, 0 100%);
+}
+
+@utility performance-circle {
+    &::before {
+        @apply w-20;
+        @apply h-20;
+        @apply rounded-full;
+    }
+}
+
+@utility console-text {
+    & > div {
+        overflow-wrap: break-word;
+    }
+
+    & > div::selection {
+        background: var(--color-text-selection);
+        @apply text-text-selected;
+    }
+
+    & > div::-moz-selection {
+        background: var(--color-text-selection);
+        @apply text-text-selected;
+    }
+}
+
+@utility scroll-left {
+    direction: rtl;
+
+    & > div {
+        direction: ltr;
+    }
+}
+
+@utility scroll-hidden {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+}
+
+@utility select-wrapper {
+    /* Select */
+    position: relative;
+
+    & select {
+        clip-path: polygon(
+                0 0,
+                100% 0,
+                100% 100%,
+                calc(100% - 12px) 100%,
+                calc(100% - 12px) calc(100% - 6px),
+                calc(100% - 12px) 0,
+                calc(100% - 18px) 0,
+                calc(100% - 18px) calc(100% - 0px),
+                calc(100% - 24px) 100%,
+                0 100%
+        );
+        cursor: pointer;
+        padding-left: 1rem;
+        padding-right: 2rem;
+        outline: none;
+    }
+
+    &::after {
+        position: absolute;
+        content: ' ';
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 12px;
+        clip-path: polygon(
+                calc(50% - 3px) calc(50% - 3px),
+                calc(50% + 3px) calc(50% - 3px),
+                50% calc(50% + 3px)
+        );
+        pointer-events: none;
+        @apply bg-text-dark;
+    }
+
+    & select option {
+        cursor: pointer;
+    }
+}
 
 @layer base {
     div {
@@ -40,82 +235,11 @@
 }
 
 @layer components {
-    .icon-button {
-        clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%);
-    }
-
-    .clipping {
-        position: relative;
-    }
-
-    .clipping::before, .clipping::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        @apply bg-forkBlue-dark;
-    }
-
-    .clipping > div, .clipping > div {
-        z-index: 1;
-        position: relative;
-    }
-
-    .console-out-container::before {
-        clip-path: polygon(0 0, calc(100% - 136px) 0, calc(100% - 90px) 48px, 100% 48px, 100% 100%, 0 100%);
-    }
-
-    .console-in-container::before {
-        clip-path: polygon(0 25px, 50px 25px, 75px 0, 100% 0, 100% 100%, 0 100%);
-    }
-
-    .performance-background::before {
-        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%);
-    }
-
-    .ip-container::before {
-        clip-path: polygon(0 25px, 60px 25px, 85px 0, 100% 0, 100% 100%, 0 100%);
-    }
-
-    .performance-container {
-        min-height: 112px;
-    }
-
-    .clip-bottom-right {
-        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
-    }
-
-    .clip-top-left {
-        clip-path: polygon(0 8px, 20px 8px, 30px 0, 100% 0, 100% 100%, 0 100%);
-    }
-
-    .performance-circle::before {
-        @apply w-20;
-        @apply h-20;
-        @apply rounded-full;
-        @apply bg-opacity-20 !important;
-    }
-
-    .console-text > div {
-        overflow-wrap: break-word;
-    }
-
-    .console-text > div::selection {
-        background: theme('colors.text.selection');
-        @apply text-text-selected;
-    }
-
-    .console-text > div::-moz-selection {
-        background: theme('colors.text.selection');
-        @apply text-text-selected;
-    }
 
 
     /* Scrollbar on Firefox */
     * {
-        scrollbar-color: theme('colors.scrollbar.thumb.DEFAULT') theme('colors.scrollbar.background');
+        scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-background);
         scrollbar-width: thin;
     }
 
@@ -125,76 +249,31 @@
     }
 
     *::-webkit-scrollbar-track {
-        background: theme('colors.scrollbar.background');
+        background: var(--color-scrollbar-background);
     }
 
     *::-webkit-scrollbar-thumb {
-        background-color: theme('colors.scrollbar.thumb.DEFAULT');
+        background-color: var(--color-scrollbar-thumb);
         border-radius: 0;
         border: 0;
     }
 
     *::-webkit-scrollbar-thumb:hover {
-        background-color: theme('colors.scrollbar.thumb.hover');
+        background-color: var(--color-scrollbar-thumb-hover);
     }
 
     *::-webkit-scrollbar-thumb:active {
-        background-color: theme('colors.scrollbar.thumb.active');
-    }
-
-    .scroll-left {
-        direction: rtl;
-    }
-
-    .scroll-left > div {
-        direction: ltr;
-    }
-
-    .scroll-hidden {
-        scrollbar-width: none;
-    }
-
-    .scroll-hidden::-webkit-scrollbar {
-        width: 0;
+        background-color: var(--color-scrollbar-thumb-active);
     }
 
     /* --- Inputs --- */
     /* Checkbox */
     label:hover input[type='checkbox'] + span {
-        @apply bg-forkBlue-hover
+        @apply bg-fork-blue-hover
     }
 
     input[type='checkbox']:checked + span {
-        @apply bg-forkBlue-highlighted !important
-    }
-
-    /* Select */
-    .select-wrapper {
-        position: relative;
-    }
-
-    .select-wrapper select {
-        clip-path: polygon(0 0, 100% 0, 100% 100%, calc(100% - 12px) 100%, calc(100% - 12px) calc(100% - 6px), calc(100% - 12px) 0, calc(100% - 18px) 0, calc(100% - 18px) calc(100% - 0px), calc(100% - 24px) 100%, 0 100%);
-        cursor: pointer;
-        padding-left: 1rem;
-        padding-right: 2rem;
-        outline: none;
-    }
-
-    .select-wrapper::after {
-        position: absolute;
-        content: ' ';
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 12px;
-        clip-path: polygon(calc(50% - 3px) calc(50% - 3px), calc(50% + 3px) calc(50% - 3px), 50% calc(50% + 3px));
-        pointer-events: none;
-        @apply bg-text-dark;
-    }
-
-    .select-wrapper select option {
-        cursor: pointer;
+        @apply bg-fork-blue-highlighted!
     }
 }
 
@@ -225,4 +304,66 @@
 
 .blazor-error-boundary::after {
     content: "An error has occurred."
+}
+
+@theme {
+    /* -- New -- */
+    --color-new-black: #0F101A;
+    --color-new-white: #FFFFFF;
+    --color-new-offwhite: #747AAC;
+    --color-new-nav: #131420;
+    --color-new-panel: #131420;
+    --color-new-light_panel: #1B1C2D;
+    --color-new-red: #F76060;
+
+    /* -- ForkBlue -- */
+    /* DEFAULT maps to the base name */
+    --color-fork-blue: #1D2030;
+    --color-fork-blue-dark: #151622;
+    --color-fork-blue-light: #292C3D;
+    --color-fork-blue-hover: #2C3358;
+    --color-fork-blue-highlighted: #374FC3;
+
+    /* -- Label -- */
+    --color-label: #575C82;
+    --color-label-hover: #E2E3E9;
+    --color-label-selected: #E2E3E9;
+
+    /* -- Text -- */
+    --color-text: #A3A8C1;
+    --color-text-darkest: #1F2234;
+    --color-text-dark: #575C82;
+    --color-text-red: #CE5050;
+    --color-text-orange: #CEA150;
+    --color-text-green: #50CE61;
+    --color-text-selected: #151622;
+    --color-text-selection: #E2E3E9;
+
+    /* -- Button -- */
+    --color-button: #575C82;
+
+    /* -- Status -- */
+    --color-status-inactive: #575C82;
+    --color-status-orange: #CEA150;
+    --color-status-green: #50CE61;
+    --color-status-red: #CE5050;
+
+    /* -- Scrollbar -- */
+    --color-scrollbar-background: #1D2030;
+    --color-scrollbar-thumb: #292C3D;
+    --color-scrollbar-thumb-hover: #313549;
+    --color-scrollbar-thumb-active: #3b4059;
+
+    /* -- Percentage -- */
+    --color-percentage-p0: #374FC3;
+    --color-percentage-p10: #50CE61;
+    --color-percentage-p20: #6DC856;
+    --color-percentage-p30: #92C05E;
+    --color-percentage-p40: #ABC757;
+    --color-percentage-p50: #CEC450;
+    --color-percentage-p60: #CEA150;
+    --color-percentage-p70: #CE8B50;
+    --color-percentage-p80: #B7684A;
+    --color-percentage-p90: #CE6150;
+    --color-percentage-p100: #CE5050;
 }
