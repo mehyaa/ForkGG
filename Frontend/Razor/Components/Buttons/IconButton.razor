@@ -1,9 +1,8 @@
-﻿@using ForkFrontend.Razor.Components.Shared.Icons
-<div style="@SizeString"
-class="@(IsDisabled ? "opacity-25 cursor-not-allowed" : $"cursor-pointer hover:text-{HoverColor}")
-        @(NoBackground ? "text-new-offwhite" : "text-new-black bg-new-offwhite")
+﻿<div style="@SizeString"
+     class="@(IsDisabled ? "opacity-25 cursor-not-allowed" : $"cursor-pointer hover:text-{HoverColor}")
+        @(NoBackground ? TextColor : "text-new-black bg-new-offwhite")
          flex justify-center items-center"
-@onclick="ClickHandler">
+     @onclick="ClickHandler">
     @* <span class="icon" style="font-size: @IconSizeString">@IconChar</span> *@
     @Icon
 </div>
@@ -15,11 +14,13 @@ class="@(IsDisabled ? "opacity-25 cursor-not-allowed" : $"cursor-pointer hover:t
 
     [Parameter] public int? Size { get; set; }
 
-    [Parameter] public bool NoBackground { get; set; } = false;
+    [Parameter] public bool NoBackground { get; set; }
 
     [Parameter] public string HoverColor { get; set; } = "label-hover";
 
     [Parameter] public bool IsDisabled { get; set; }
+
+    [Parameter] public string TextColor { get; set; } = "text-new-offwhite";
 
     private string SizeString => Size.HasValue ? $"width: {Size}px; height: {Size}px;" : "";
 

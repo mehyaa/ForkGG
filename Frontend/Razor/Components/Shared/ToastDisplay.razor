@@ -20,6 +20,13 @@
                     @toast.Text
                 </span>
             </p>
+            <div class="hidden hover:text-text-red/60"></div> <!-- Pseudo class to register hover color -->
+            <IconButton NoBackground TextColor="text-status-red" HoverColor="text-red/60"
+                        OnClickMethod="_ => ToastManager.RemoveToast(toast)">
+                <Icon>
+                    <CloseIcon Height="14" Width="14"></CloseIcon>
+                </Icon>
+            </IconButton>
         </div>
     }
 </div>

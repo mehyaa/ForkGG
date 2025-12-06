@@ -36,4 +36,11 @@ public class ToastManager : IDisposable
             ToastsUpdated?.Invoke();
         }
     }
+
+    public void RemoveToast(Toast toast)
+    {
+        _logger.LogDebug($"Unregistered toast: {toast}");
+        Toasts.Remove(toast);
+        ToastsUpdated?.Invoke();
+    }
 }
