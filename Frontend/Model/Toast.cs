@@ -20,6 +20,7 @@ public class Toast
     public ToastLevel Level { get; set; }
     public string Text { get; set; }
     public TimeSpan? HideDuration { get; set; }
+    public DateTime CreatedOn { get; set; } = DateTime.Now;
 
     public override string ToString()
     {

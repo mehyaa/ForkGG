@@ -99,6 +99,7 @@
         AvailableVersionTypes = await GetAvailableVersionTypes();
         _selectedVersionType = AvailableVersionTypes.First().ModelValue;
         Versions = await GetAvailableVersions(_selectedVersionType.Value);
+        SetVersionsForType(SelectedVersionType);
     }
 
     private async Task OnCreateEntity(IconButton _)

@@ -4,11 +4,11 @@
 @implements IDisposable
 @inject ToastManager ToastManager
 
-<div class="fixed bottom-0 right-0 z-30">
+<div class="fixed flex flex-col items-end bottom-0 right-0 z-30 gap-3 m-3">
     @foreach (Toast toast in _displayedToasts)
     {
         <div
-            class="flex gap-3 m-3 px-3 py-2 items-center toast-element @ClassNameForDisplayStatus(_displayedToastRemovedByStatus[toast]) @ToastClasses(toast)">
+            class="flex gap-3 px-3 py-2 items-center toast-element @ClassNameForDisplayStatus(_displayedToastRemovedByStatus[toast]) @ToastClasses(toast)">
 
             @* TODO CKE: Make the icons change according to Toast Level*@
             <ForkFrontend.Razor.Components.Shared.Icons.WarningIcon Height="24"
@@ -20,13 +20,17 @@
                     @toast.Text
                 </span>
             </p>
-            <div class="hidden hover:text-text-red/60"></div> <!-- Pseudo class to register hover color -->
-            <IconButton NoBackground TextColor="text-status-red" HoverColor="text-red/60"
-                        OnClickMethod="_ => ToastManager.RemoveToast(toast)">
-                <Icon>
-                    <CloseIcon Height="14" Width="14"></CloseIcon>
-                </Icon>
-            </IconButton>
+            @if (toast.Level == ToastLevel.Error)
+            {
+                <div class="hidden hover:text-text-red/60"></div>
+                <!-- Pseudo class to register hover color -->
+                <IconButton NoBackground TextColor="text-status-red" HoverColor="text-red/60"
+                            OnClickMethod="_ => ToastManager.RemoveToast(toast)">
+                    <Icon>
+                        <CloseIcon Height="14" Width="14"></CloseIcon>
+                    </Icon>
+                </IconButton>
+            }
         </div>
     }
 </div>
