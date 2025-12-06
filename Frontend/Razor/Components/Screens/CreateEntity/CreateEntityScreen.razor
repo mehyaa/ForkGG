@@ -21,16 +21,16 @@
             <div class="px-4 pb-10">
                 <div>
                     <ForkRadio Name="ServerType" @bind-Value="SelectedVersionType" TModelValue="VersionType"
-                               Values="AvailableVersionTypes" RadioType="RadioType.ButtonRow" Label="Server Type"
+                               Values="AvailableVersionTypes" RadioType="RadioType.ButtonRow" DisplayName="Server Type"
                                LoadingByValue="@ServerVersionsLoadingTasksByType.Select(v => new KeyValuePair<VersionType, bool>(v.Key, true)).ToDictionary()">
                     </ForkRadio>
                 </div>
 
-                <div>
+                <div class="w-max">
                     <ForkSelect Name="ServerVersion" @bind-Value="_serverPayload.ServerVersion"
                                 TModelValue="ServerVersion"
                                 Loading="@ServerVersionsLoadingTasksByType.ContainsKey(SelectedVersionType)"
-                                Values="Versions" Label="Choose Version">
+                                Values="Versions" DisplayName="Choose Version">
                     </ForkSelect>
                 </div>
             </div>
@@ -38,24 +38,24 @@
             <span class="text-lg font-bold">Configure Basic Settings</span>
             <div class="px-4 pb-10">
                 <div class="flex gap-8">
-                    <ForkText Name="ServerName" @bind-Value="_serverPayload.ServerName" Label="Server Name"
+                    <ForkText Name="ServerName" @bind-Value="_serverPayload.ServerName" DisplayName="Server Name"
                               Loading="@ServerVersionsLoadingTasksByType.ContainsKey(SelectedVersionType)">
                     </ForkText>
                     <ForkText Name="ServerName" @bind-Value="_serverPayload.VanillaSettings.LevelName"
                               Loading="@ServerVersionsLoadingTasksByType.ContainsKey(SelectedVersionType)"
-                              Label="World Name">
+                              DisplayName="World Name">
                     </ForkText>
                 </div>
                 <div class="flex gap-8">
                     <ForkSelect Name="Gamemode" @bind-Value="_serverPayload.VanillaSettings.CurrGamemode"
                                 TModelValue="Gamemode"
                                 Loading="@ServerVersionsLoadingTasksByType.ContainsKey(SelectedVersionType)"
-                                Values="GetAvailableGameModes()" Label="Gamemode">
+                                DisplayName="Gamemode">
                     </ForkSelect>
                     <ForkSelect Name="Gamemode" @bind-Value="_serverPayload.VanillaSettings.CurrDifficulty"
                                 TModelValue="Difficulty"
                                 Loading="@ServerVersionsLoadingTasksByType.ContainsKey(SelectedVersionType)"
-                                Values="GetAvailableDifficulties()" Label="Difficulty">
+                                DisplayName="Difficulty">
                     </ForkSelect>
                 </div>
             </div>
@@ -179,28 +179,6 @@
         StateHasChanged();
 
         return versionTypes.Select(versionType => new ForkFormEntity<VersionType, string>(versionType, versionType.ToString())).ToList();
-    }
-
-    private List<ForkFormEntity<Gamemode, string>> GetAvailableGameModes()
-    {
-        List<ForkFormEntity<Gamemode, string>> result = new();
-        foreach (Gamemode gameMode in _serverPayload.VanillaSettings.Gamemodes)
-        {
-            result.Add(new ForkFormEntity<Gamemode, string>(gameMode, gameMode.ToString()));
-        }
-
-        return result;
-    }
-
-    private List<ForkFormEntity<Difficulty, string>> GetAvailableDifficulties()
-    {
-        List<ForkFormEntity<Difficulty, string>> result = new();
-        foreach (Difficulty difficulty in _serverPayload.VanillaSettings.Difficulties)
-        {
-            result.Add(new ForkFormEntity<Difficulty, string>(difficulty, difficulty.ToString()));
-        }
-
-        return result;
     }
 
 }

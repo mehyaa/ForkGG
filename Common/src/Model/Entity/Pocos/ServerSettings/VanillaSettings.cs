@@ -95,10 +95,6 @@ public class VanillaSettings : AbstractSettings
 
     #region Properties
 
-    public List<Difficulty> Difficulties { get; } = EnumExtensions.GetValues<Difficulty>().ToList();
-    public List<Gamemode> Gamemodes { get; } = EnumExtensions.GetValues<Gamemode>().ToList();
-    public List<LevelType> LevelTypes { get; } = EnumExtensions.GetValues<LevelType>().ToList();
-
     public int SpawnProtection
     {
         get => int.Parse(SettingsDictionary["spawn-protection"]);

@@ -1,17 +1,30 @@
-﻿<div class="grid grid-cols-2 gap-3">
+﻿@using ForkCommon.Model.Entity.Enums
+@using ForkCommon.Model.Entity.Pocos.ServerSettings
+<div class="grid grid-cols-1 2xl:grid-cols-2 gap-3">
     <div class="flex flex-col">
         <span class="text-lg font-bold">Basics</span>
-        <div class="p-3 flex flex-col gap-3">
-            <Textfield @bind-Value="serverName" DisplayName="SERVER NAME" class="bg-new-black px-3 py-1 text-new-offwhite/70"></Textfield>
-            <Textfield @bind-Value="motd" DisplayName="MESSAGE OF THE DAY" class="bg-new-black px-3 py-1 text-new-offwhite/70 border-l-2 border-forkBlue-highlighted"></Textfield>
-            <Checkbox @bind-Value="hardcoreMode" DisplayName="Hardcore" class="border-l-2 border-forkBlue-highlighted pl-1"></Checkbox>
-            <Checkbox @bind-Value="hardcoreMode" DisplayName="Online Mode"></Checkbox>
-            <Checkbox @bind-Value="hardcoreMode" DisplayName="Enable Whitelist"></Checkbox>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <div>
+                <ForkSelect @bind-Value="Settings.CurrGamemode" DisplayName="Gamemode" TModelValue="Gamemode"/>
+                <ForkSelect @bind-Value="Settings.CurrDifficulty" DisplayName="Difficulty" TModelValue="Difficulty"/>
+            </div>
+            <div>
+                <ForkNumber @bind-Value="Settings.MaxPlayers" DisplayName="Player Slots"/>
+                <ForkNumber @bind-Value="Settings.ServerPort" DisplayName="Server Port"/>
+            </div>
         </div>
     </div>
 
     <div class="flex flex-col">
-        <span class="text-lg font-bold ">World</span>
+        <span class="text-lg font-bold ">Server Appearance</span>
+        <div class="p-3 flex flex-col gap-3">
+            <Textfield @bind-Value="Settings.Motd" DisplayName="MESSAGE OF THE DAY"
+                       class="bg-new-black px-3 py-1 text-new-offwhite/70 border-l-2 border-forkBlue-highlighted"></Textfield>
+            <Checkbox @bind-Value="Settings.Hardcore" DisplayName="Hardcore"
+                      class="border-l-2 border-forkBlue-highlighted pl-1"></Checkbox>
+            <Checkbox @bind-Value="Settings.OnlineMode" DisplayName="Online Mode"></Checkbox>
+            <Checkbox @bind-Value="Settings.Whitelist" DisplayName="Enable Whitelist"></Checkbox>
+        </div>
     </div>
     <span class="text-lg font-bold ">Performance</span>
     <span class="text-lg font-bold ">Players</span>
@@ -21,8 +34,8 @@
     <span class="text-lg font-bold ">Logging</span>
 
 </div>
+
 @code {
-    private string serverName = "Vanilla";
-    private string motd = "Fork Server &a1.0.0";
-    private bool hardcoreMode;
+    [Parameter] public required VanillaSettings Settings { get; set; }
+
 }

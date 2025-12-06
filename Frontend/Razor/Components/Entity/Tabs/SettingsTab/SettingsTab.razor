@@ -5,13 +5,14 @@
 @inject EntityConnectionService EntityConnectionService;
 
 <div class="flex flex-1 gap-2">
-    
+
     @* Settings Selection *@
     <div class="w-52 bg-new-panel">
         @foreach (AbstractSettings settings in _settingsList)
         {
-            <div class="px-3 flex items-center h-14 @(_selectedSettings == settings ? "bg-new-light_panel" : "text-new-offwhite hover:text-new-white")"
-                 @onclick="() => _selectedSettings = settings">
+            <div
+                class="px-3 flex items-center h-14 @(_selectedSettings == settings ? "bg-new-light_panel" : "text-new-offwhite hover:text-new-white")"
+                @onclick="() => _selectedSettings = settings">
                 @settings.Name.Split(".")[0]<span class="opacity-30">.@settings.Name.Split(".")[1]</span>
             </div>
         }
@@ -21,7 +22,7 @@
     <div class="flex-1 bg-new-panel p-4">
         @if (_selectedSettings != null)
         {
-            <DynamicComponent Type="@GetTypeForSettings(_selectedSettings)"/>
+            <DynamicComponent Type="@GetTypeForSettings(_selectedSettings)" Parameters="_selectedSettingsParameters"/>
         }
     </div>
 
@@ -35,6 +36,7 @@
     private IEntity Entity => EntityState.Entity;
 
     private AbstractSettings? _selectedSettings;
+    private Dictionary<string, object?> _selectedSettingsParameters = new();
     private List<AbstractSettings> _settingsList = [];
 
     protected override async Task OnInitializedAsync()
@@ -42,13 +44,13 @@
         List<AbstractSettings>? settings = await ErrorBoundary.RunSavely(EntityConnectionService.GetSettingsAsync(Entity.Id));
         if (settings == null || settings.Count == 0)
         {
-            _selectedSettings = null;
-            _settingsList = [];
-            return;
+            SelectSettings(null);
         }
-
-        _settingsList = settings;
-        _selectedSettings = _settingsList[0];
+        else
+        {
+            _settingsList = settings;
+            SelectSettings(settings[0]);
+        }
     }
 
     private Type GetTypeForSettings(AbstractSettings settings)
@@ -59,6 +61,16 @@
         }
 
         return typeof(DefaultSettingsTab);
+    }
+
+    private void SelectSettings(AbstractSettings? settings)
+    {
+        _selectedSettings = settings;
+        _selectedSettingsParameters = new Dictionary<string, object?>();
+        if (settings is VanillaSettings)
+        {
+            _selectedSettingsParameters[nameof(VanillaSettingsTab.Settings)] = settings;
+        }
     }
 
 }
