@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Fork.Logic.Managers;
 using Fork.Logic.Services.EntityServices;
 using ForkCommon.Model.Entity.Pocos;
-using ForkCommon.Model.Entity.Pocos.ServerSettings;
+using ForkCommon.Model.Entity.Pocos.Settings;
 using ForkCommon.Model.Entity.Transient.Console;
 using ForkCommon.Model.Entity.Transient.Console.Commands;
 using ForkCommon.Model.Payloads.Entity;

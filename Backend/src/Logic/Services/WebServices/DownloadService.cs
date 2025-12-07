@@ -30,12 +30,13 @@ public class DownloadService
         await using FileStream fileStream = new(
             Path.Combine(entity.GetPath(_application), "server.jar"),
             FileMode.Create, FileAccess.Write, FileShare.None);
-        if (entity.Version?.JarLink == null)
+        if (entity.EntitySettings.ServerVersion?.JarLink == null)
         {
             throw new IllegalInternalStateException("Version is missing JarLink! Version setup is wrong");
         }
 
-        await client.DownloadAsync(entity.Version.JarLink, fileStream, progress, cancellationToken);
+        await client.DownloadAsync(entity.EntitySettings.ServerVersion.JarLink, fileStream, progress,
+            cancellationToken);
     }
 
     public async Task DownloadFileAsync(string url, string targetPath, IProgress<float> progress,

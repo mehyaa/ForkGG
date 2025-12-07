@@ -51,13 +51,11 @@ public class EntityManager
 
         // TODO extend once we got networks
         ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
         IEntity? result = await context.ServerSet.Where(s => s.Id == entityId)
-            .Include(s => s.AutomationTimes)
-#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            .Include(s => s.EntitySettings.JavaSettings)
+            .Include(s => s.EntitySettings.ServerVersion)
+            .Include(a => a.EntitySettings.AutomationTimes)
             .ThenInclude(a => a.Time)
-            .Include(s => s.JavaSettings)
-            .Include(s => s.Version)
             .Include(s => s.ServerPlayers)
             .ThenInclude(s => s.Player)
             .FirstOrDefaultAsync();

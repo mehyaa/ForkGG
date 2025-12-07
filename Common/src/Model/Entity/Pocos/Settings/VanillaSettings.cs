@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ForkCommon.ExtensionMethods;
 using ForkCommon.Model.Entity.Enums;
 using Newtonsoft.Json;
 
-namespace ForkCommon.Model.Entity.Pocos.ServerSettings;
+namespace ForkCommon.Model.Entity.Pocos.Settings;
 
-public class VanillaSettings : AbstractSettings
+public class VanillaSettings : AbstractKeyValueSettings
 {
     [JsonConstructor]
     private VanillaSettings() : base("server.properties", new Dictionary<string, string>())

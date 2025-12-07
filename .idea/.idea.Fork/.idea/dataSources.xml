@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="app.db" uuid="ca5fe628-8881-4d85-bb60-f25c27fd97eb">
+    <data-source source="LOCAL" name="app.db" uuid="84c70791-6a87-4f19-9bd5-63219ad2b6cc">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$USER_HOME$/AppData/Roaming/ForkApp/persistence/app.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\chris\AppData\Roaming\ForkApp\persistence\app.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

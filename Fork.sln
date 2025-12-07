@@ -31,4 +31,8 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(RiderSharedRunConfigurations) = postSolution
+		File = Backend\.run\Add Migration.run.xml
+		File = Backend\.run\Remove last migration.run.xml
+	EndGlobalSection
 EndGlobal

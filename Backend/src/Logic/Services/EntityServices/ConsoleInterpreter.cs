@@ -61,8 +61,8 @@ public class ConsoleInterpreter
         {
             string name = joinMatch.Groups[1].Value;
             Player player = await PlayerByNameAsync(name);
-            _logger.LogDebug($"Player {name} joined the server {server.Name}");
-            ServerPlayer serverPlayer = server.ServerPlayers?.FirstOrDefault(sp => sp.Player.Uid == player.Uid) ??
+            _logger.LogDebug($"Player {name} joined the server {server.EntitySettings.EntityName}");
+            ServerPlayer serverPlayer = server.ServerPlayers.FirstOrDefault(sp => sp.Player.Uid == player.Uid) ??
                                         new ServerPlayer(player, server);
             serverPlayer.IsOnline = true;
             await _entityManager.UpdatePlayerOnPlayerList(server, serverPlayer);
@@ -73,8 +73,8 @@ public class ConsoleInterpreter
         {
             string name = leaveMatch.Groups[1].Value;
             Player player = await PlayerByNameAsync(name);
-            _logger.LogDebug($"Player {name} left the server {server.Name}");
-            ServerPlayer serverPlayer = server.ServerPlayers?.FirstOrDefault(sp => sp.Player.Uid == player.Uid) ??
+            _logger.LogDebug($"Player {name} left the server {server.EntitySettings.EntityName}");
+            ServerPlayer serverPlayer = server.ServerPlayers.FirstOrDefault(sp => sp.Player.Uid == player.Uid) ??
                                         new ServerPlayer(player, server);
             serverPlayer.IsOnline = false;
             await _entityManager.UpdatePlayerOnPlayerList(server, serverPlayer);
@@ -83,7 +83,7 @@ public class ConsoleInterpreter
 
     private async Task HandlePlayerOps(Server server, string line)
     {
-        Regex addRegex = server.Version?.IsEqualOrGreaterThan(ServerVersion.Version1_13) == true
+        Regex addRegex = server.EntitySettings.ServerVersion?.IsEqualOrGreaterThan(ServerVersion.Version1_13) == true
             ? _opsAddRegex
             : _opsAddOldRegex;
         Match opsAddMatch = addRegex.Match(line);
@@ -91,14 +91,14 @@ public class ConsoleInterpreter
         {
             string name = opsAddMatch.Groups[1].Value;
             Player player = await PlayerByNameAsync(name);
-            _logger.LogDebug($"Player {name} opped on server {server.Name}");
-            ServerPlayer serverPlayer = server.ServerPlayers?.FirstOrDefault(sp => sp.Player.Uid == player.Uid) ??
+            _logger.LogDebug($"Player {name} opped on server {server.EntitySettings.EntityName}");
+            ServerPlayer serverPlayer = server.ServerPlayers.FirstOrDefault(sp => sp.Player.Uid == player.Uid) ??
                                         new ServerPlayer(player, server);
             serverPlayer.IsOp = true;
             await _entityManager.UpdatePlayerOnPlayerList(server, serverPlayer);
         }
 
-        Regex removeRegex = server.Version?.IsEqualOrGreaterThan(ServerVersion.Version1_13) == true
+        Regex removeRegex = server.EntitySettings.ServerVersion?.IsEqualOrGreaterThan(ServerVersion.Version1_13) == true
             ? _opsRemoveRegex
             : _opsRemoveOldRegex;
         Match opsRemoveMatch = removeRegex.Match(line);
@@ -106,8 +106,8 @@ public class ConsoleInterpreter
         {
             string name = opsRemoveMatch.Groups[1].Value;
             Player player = await PlayerByNameAsync(name);
-            _logger.LogDebug($"Player {name} de-opped on server {server.Name}");
-            ServerPlayer serverPlayer = server.ServerPlayers?.FirstOrDefault(sp => sp.Player.Uid == player.Uid) ??
+            _logger.LogDebug($"Player {name} de-opped on server {server.EntitySettings.EntityName}");
+            ServerPlayer serverPlayer = server.ServerPlayers.FirstOrDefault(sp => sp.Player.Uid == player.Uid) ??
                                         new ServerPlayer(player, server);
             serverPlayer.IsOp = false;
             await _entityManager.UpdatePlayerOnPlayerList(server, serverPlayer);
@@ -121,7 +121,7 @@ public class ConsoleInterpreter
         {
             string name = whitelistAddMatch.Groups[1].Value;
             Player player = await PlayerByNameAsync(name);
-            _logger.LogDebug($"Player {name} added to the servers {server.Name} whitelist");
+            _logger.LogDebug($"Player {name} added to the servers {server.EntitySettings.EntityName} whitelist");
             await _entityManager.UpdatePlayerOnWhitelist(server, player, PlayerlistUpdateType.Add);
         }
 
@@ -130,14 +130,14 @@ public class ConsoleInterpreter
         {
             string name = whitelistRemoveMatch.Groups[1].Value;
             Player player = await PlayerByNameAsync(name);
-            _logger.LogDebug($"Player {name} removed from the servers {server.Name} whitelist");
+            _logger.LogDebug($"Player {name} removed from the servers {server.EntitySettings.EntityName} whitelist");
             await _entityManager.UpdatePlayerOnWhitelist(server, player, PlayerlistUpdateType.Remove);
         }
     }
 
     private async Task HandlePlayerBanList(Server server, string line)
     {
-        Regex addRegex = server.Version?.IsEqualOrGreaterThan(ServerVersion.Version1_13) == true
+        Regex addRegex = server.EntitySettings.ServerVersion?.IsEqualOrGreaterThan(ServerVersion.Version1_13) == true
             ? _banlistAddRegex
             : _banlistAddOldRegex;
         Match banlistAddMatch = addRegex.Match(line);
@@ -145,7 +145,7 @@ public class ConsoleInterpreter
         {
             string name = banlistAddMatch.Groups[1].Value;
             Player player = await PlayerByNameAsync(name);
-            _logger.LogDebug($"Player {name} banned on server {server.Name}");
+            _logger.LogDebug($"Player {name} banned on server {server.EntitySettings.EntityName}");
             await _entityManager.UpdatePlayerOnBanList(server, player, PlayerlistUpdateType.Add);
         }
 
@@ -154,7 +154,7 @@ public class ConsoleInterpreter
         {
             string name = banlistRemoveMatch.Groups[1].Value;
             Player player = await PlayerByNameAsync(name);
-            _logger.LogDebug($"Player {name} unbanned on server {server.Name}");
+            _logger.LogDebug($"Player {name} unbanned on server {server.EntitySettings.EntityName}");
             await _entityManager.UpdatePlayerOnBanList(server, player, PlayerlistUpdateType.Remove);
         }
     }

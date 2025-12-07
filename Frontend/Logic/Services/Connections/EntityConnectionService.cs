@@ -1,5 +1,5 @@
 ﻿using ForkCommon.Model.Entity.Pocos;
-using ForkCommon.Model.Entity.Pocos.ServerSettings;
+using ForkCommon.Model.Entity.Pocos.Settings;
 using ForkCommon.Model.Entity.Transient.Console;
 using ForkCommon.Model.Entity.Transient.Console.Commands;
 using ForkCommon.Model.Payloads.Entity;
@@ -56,14 +56,14 @@ public class EntityConnectionService : AbstractConnectionService
     public async Task<ulong> CreateServerAsync(CreateServerPayload createServerPayload)
     {
         HttpResponseMessage response = await PostAsJsonAsync($"{URL_BASE}/createserver", createServerPayload);
-        ShowSuccessToast($"Created {createServerPayload.ServerName}");
+        await ShowSuccessToast($"Created {createServerPayload.ServerName}");
         return ulong.Parse(await response.Content.ReadAsStringAsync());
     }
 
     public async Task<bool> DeleteEntityAsync(IEntity entity)
     {
         HttpResponseMessage response = await PostAsJsonAsync($"{URL_BASE}/{entity.Id}/delete");
-        ShowSuccessOrErrorToast(response.IsSuccessStatusCode, $"Deleted {entity.ToString()}",
+        await ShowSuccessOrErrorToast(response.IsSuccessStatusCode, $"Deleted {entity.ToString()}",
             $"Failed to delete {entity.ToString()}");
         return response.IsSuccessStatusCode;
     }

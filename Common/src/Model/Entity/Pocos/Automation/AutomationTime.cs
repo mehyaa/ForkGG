@@ -12,7 +12,4 @@ public class AutomationTime
     public bool Enabled { get; set; }
     public AutomationType Type { get; set; }
     public SimpleTime? Time { get; set; }
-
-    public ulong ServerId { get; set; }
-    [JsonIgnore] public Server? Server { get; set; }
 }

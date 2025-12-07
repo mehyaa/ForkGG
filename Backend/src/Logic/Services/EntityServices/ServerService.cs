@@ -19,7 +19,7 @@ using ForkCommon.Model.Application.Exceptions;
 using ForkCommon.Model.Entity.Enums;
 using ForkCommon.Model.Entity.Enums.Console;
 using ForkCommon.Model.Entity.Pocos;
-using ForkCommon.Model.Entity.Pocos.ServerSettings;
+using ForkCommon.Model.Entity.Pocos.Settings;
 using ForkCommon.Model.Notifications.EntityNotifications;
 using Microsoft.Extensions.Logging;
 
@@ -105,7 +105,8 @@ public class ServerService(
         }
 
         await ChangeServerStatusAsync(server, EntityStatus.Starting);
-        logger.LogInformation($"Starting server {server.Name} on world {server.VanillaSettings?.LevelName}");
+        logger.LogInformation(
+            $"Starting server {server.EntitySettings.EntityName} on world {server.VanillaSettings?.LevelName}");
 
         try
         {
@@ -115,16 +116,17 @@ public class ServerService(
             {
                 await console.WriteError(server,
                     $"This server has no directory for some reason. The path that was searched was:\n{server.GetPath(application)}");
-                throw new ForkException($"Supplied server \"{server.Name}\" has no directory!");
+                throw new ForkException($"Supplied server \"{server.EntitySettings.EntityName}\" has no directory!");
             }
 
-            JavaVersion? javaVersion = JavaVersionUtils.GetInstalledJavaVersion(server.JavaSettings?.JavaPath);
+            JavaVersion? javaVersion =
+                JavaVersionUtils.GetInstalledJavaVersion(server.EntitySettings.JavaSettings.JavaPath);
             if (javaVersion == null)
             {
                 await console.WriteError(server,
-                    $"No valid Java installation was found for the configured java path:\n{server.JavaSettings?.JavaPath}");
+                    $"No valid Java installation was found for the configured java path:\n{server.EntitySettings.JavaSettings.JavaPath}");
                 throw new ForkException(
-                    $"No valid Java installation was found for the configured java path:\n{server.JavaSettings?.JavaPath}");
+                    $"No valid Java installation was found for the configured java path:\n{server.EntitySettings.JavaSettings.JavaPath}");
             }
 
             if (!javaVersion.Is64Bit)
@@ -135,7 +137,7 @@ public class ServerService(
 
             if (javaVersion.VersionComputed < 16)
             {
-                if (new ServerVersion { Version = "1.17" }.CompareTo(server.Version) <= 0)
+                if (new ServerVersion { Version = "1.17" }.CompareTo(server.EntitySettings.ServerVersion) <= 0)
                 {
                     await console.WriteError(server,
                         "The Java installation selected for this server is outdated. Please update Java to version 16 or higher.");
@@ -159,10 +161,10 @@ public class ServerService(
                 RedirectStandardError = true,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
-                FileName = server.JavaSettings?.JavaPath ?? "java",
+                FileName = server.EntitySettings.JavaSettings.JavaPath ?? "java",
                 WorkingDirectory = serverDirectory.FullName,
-                Arguments = "-Xmx" + server.JavaSettings?.MaxRam + "m " +
-                            server.JavaSettings?.StartupParameters + " -jar server.jar nogui",
+                Arguments = "-Xmx" + server.EntitySettings.JavaSettings.MaxRam + "m " +
+                            server.EntitySettings.JavaSettings.StartupParameters + " -jar server.jar nogui",
                 WindowStyle = ProcessWindowStyle.Hidden,
                 CreateNoWindow = true
             };
@@ -202,7 +204,7 @@ public class ServerService(
 
                 if (server.Status == EntityStatus.Started)
                 {
-                    logger.LogInformation("Started server " + server.Name);
+                    logger.LogInformation("Started server " + server.EntitySettings.EntityName);
 
                     // TODO CKE update Worlds as a new one might have been created
                     // viewModel.InitializeWorldsList();
@@ -277,7 +279,7 @@ public class ServerService(
 
         string resultRaw = result;
         int i = 1;
-        while (context.ServerSet.Any(s => s.Name == result))
+        while (context.ServerSet.Any(s => s.EntitySettings.EntityName == result))
         {
             result = resultRaw + "(" + i + ")";
             i++;
@@ -396,7 +398,7 @@ public class ServerService(
             {
                 EntityPerformanceNotification notification = new(server.Id,
                     await process.CalculateCpuLoad(TimeSpan.FromSeconds(1)),
-                    await process.CalculateMemLoad(server.JavaSettings!.MaxRam),
+                    await process.CalculateMemLoad(server.EntitySettings.JavaSettings.MaxRam),
                     DateTime.Now - process.StartTime);
                 await notificationCenter.BroadcastNotification(notification);
             }

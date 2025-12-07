@@ -78,17 +78,17 @@ public class CommandService
             RedirectStandardError = true,
             RedirectStandardOutput = true,
             UseShellExecute = false,
-            FileName = entity.JavaSettings?.JavaPath ?? "java",
+            FileName = entity.EntitySettings.JavaSettings.JavaPath ?? "java",
             WorkingDirectory = serverDirectory,
             WindowStyle = ProcessWindowStyle.Hidden,
             CreateNoWindow = true
         };
 
-        if (entity.Version?.IsEqualOrGreaterThan(ServerVersion.Version1_18) == true)
+        if (entity.EntitySettings.ServerVersion?.IsEqualOrGreaterThan(ServerVersion.Version1_18) == true)
         {
             startInfo.Arguments = "-DbundlerMainClass=net.minecraft.data.Main -jar server.jar --reports";
         }
-        else if (entity.Version?.IsEqualOrGreaterThan(ServerVersion.Version1_13) == true)
+        else if (entity.EntitySettings.ServerVersion?.IsEqualOrGreaterThan(ServerVersion.Version1_13) == true)
         {
             startInfo.Arguments = "-cp server.jar net.minecraft.data.Main --reports";
         }

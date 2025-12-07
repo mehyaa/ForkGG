@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Fork.Logic.Managers;
 using Fork.Logic.Services.AuthenticationServices;
 using ForkCommon.Model.Entity.Pocos;
-using ForkCommon.Model.Entity.Pocos.ServerSettings;
+using ForkCommon.Model.Entity.Pocos.Settings;
 using ForkCommon.Model.Privileges.Entity.ReadEntity.ReadSettingsTab;
 
 namespace Fork.Logic.Services.EntityServices;

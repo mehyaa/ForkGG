@@ -8,6 +8,6 @@ public static class EntityExtensions
 {
     public static string GetPath(this IEntity entity, ApplicationManager applicationManager)
     {
-        return Path.Combine(applicationManager.EntityPath, entity.Name!.Trim().Replace(" ", ""));
+        return Path.Combine(applicationManager.EntityPath, entity.EntitySettings.EntityName!.Trim().Replace(" ", ""));
     }
 }

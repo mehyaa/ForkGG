@@ -54,7 +54,7 @@ public class TranslationService
         }
         catch (Exception e)
         {
-            _logger.LogError($"Property missing in translation file: {variable}");
+            _logger.LogError($"Property missing in translation file: {variable}", e);
             return variable;
         }
     }

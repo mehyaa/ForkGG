@@ -1,12 +1,11 @@
 ﻿@using ForkCommon.Model.Entity.Enums
 @using ForkCommon.Model.Entity.Pocos
-@using ForkCommon.Model.Entity.Pocos.ServerSettings
+@using ForkCommon.Model.Entity.Pocos.Settings
 @using ForkCommon.Model.Payloads.Entity
 @using ForkFrontend.Logic.Services.Connections
 @using ForkFrontend.Logic.Services.Managers
 @using ForkFrontend.Model
 @using ForkFrontend.Model.Enums
-@using ForkFrontend.Razor.Components.Shared.Icons
 @using Index = Index
 @inject ILogger<Sidebar> Logger
 @inject EntityConnectionService EntityConnection
@@ -58,7 +57,9 @@
     @* Fork Version Checker *@
     <div class="bg-new-panel flex gap-3 px-4 py-8 items-center" style="height: 50px">
         <IconButton Size="45" OnClickMethod="() => { }" NoBackground="true">
-            <Icon><ForkSettingIcon Width="24" Height="24" /></Icon>
+            <Icon>
+                <ForkSettingIcon Width="24" Height="24"/>
+            </Icon>
         </IconButton>
         <div class="flex-1 flex flex-col">
             <span class="leading-none">v1.0.0</span>
@@ -88,7 +89,7 @@
     [CascadingParameter(Name = nameof(SelectedEntity))]
     public IEntity? SelectedEntity { get; set; }
 
-    private int _counter = 0;
+    private int _counter;
 
     private async Task CheckForUpdate(IconButton button)
     {

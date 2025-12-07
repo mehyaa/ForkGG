@@ -25,7 +25,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Migrations"/>
         <Folder Include="src\"/>
     </ItemGroup>
 
@@ -35,5 +34,10 @@
 
     <ItemGroup>
         <None Remove="Resources\DefaultHead.png"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include=".run\Add Migration.run.xml"/>
+        <Content Include=".run\Remove last migration.run.xml"/>
     </ItemGroup>
 </Project>

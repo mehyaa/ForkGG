@@ -174,6 +174,7 @@
         padding-left: 1rem;
         padding-right: 2rem;
         outline: none;
+        height: 32px;
     }
 
     &::after {
@@ -195,6 +196,12 @@
     & select option {
         cursor: pointer;
     }
+}
+
+@utility input-wrapper {
+    height: 32px;
+    display: flex;
+    @apply pl-4 pr-1 ml-1 mt-1;
 }
 
 @layer base {

@@ -7,7 +7,7 @@ using Fork.Logic.Services.FileServices;
 using Fork.Util.ExtensionMethods;
 using ForkCommon.Model.Entity.Pocos;
 using ForkCommon.Model.Entity.Pocos.Player;
-using ForkCommon.Model.Entity.Pocos.ServerSettings;
+using ForkCommon.Model.Entity.Pocos.Settings;
 using Microsoft.Extensions.Logging;
 
 namespace Fork.Logic.Services.EntityServices;
@@ -74,7 +74,7 @@ public class EntityPostProcessingService
 
         // Read whitelist, banlist and oplist
         // Version 1.7.5 and earlier have txt files
-        if (server.Version?.CompareTo(new ServerVersion { Version = "1.7.5" }) <= 0)
+        if (server.EntitySettings.ServerVersion?.CompareTo(new ServerVersion { Version = "1.7.5" }) <= 0)
         {
             List<string> whitelistNames = await _fileReader.ReadWhiteListTxt(serverPath);
             server.Whitelist = await NamesToPlayersAsync(whitelistNames);

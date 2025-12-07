@@ -15,7 +15,7 @@ public class Player : IComparable
     //This is set if the player is not found in the Mojang player API
     public bool IsOfflinePlayer { get; set; } = false;
 
-    // Name of the player
+    // EntityName of the player
     public string? Name { get; set; }
 
     // Base 64 of the players Head

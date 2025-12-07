@@ -3,7 +3,6 @@
 @using ForkFrontend.Logic.Services.Connections
 @using ForkFrontend.Logic.Services.Managers
 @using ForkFrontend.Logic.Services.Notifications
-@using ForkFrontend.Razor.Components.Shared.Icons
 @inject ILogger<SidebarEntity> Logger
 @inject NotificationService NotificationService
 @inject EntityConnectionService EntityConnectionService
@@ -19,29 +18,30 @@
             @onclick="OnSelectEntity">
             @* Status *@
             <StatusIndicator Status="Value.Entity.Status ?? EntityStatus.Stopped"></StatusIndicator>
-            @* Icon TODO CKE *@
-            @if (Value.Entity.Version?.Type == VersionType.Paper)
+            @* Icon *@
+            @switch (Value.Entity.EntitySettings.ServerVersion?.Type)
             {
-                <PaperTypeIcon Width="24" Height="24"/>
-            }
-            @if (Value.Entity.Version?.Type == VersionType.Vanilla)
-            {
-                <VanillaTypeIcon Width="24" Height="24"/>
-            }
-            @if (Value.Entity.Version?.Type == VersionType.Waterfall)
-            {
-                <WaterfallTypeIcon Width="24" Height="24"/>
-            }
-            @if (Value.Entity.Version?.Type == VersionType.Purpur)
-            {
-                <PurpurTypeIcon Width="24" Height="24"/>
+                case VersionType.Paper:
+                    <PaperTypeIcon Width="24" Height="24"/>
+                    break;
+                case VersionType.Vanilla:
+                    <VanillaTypeIcon Width="24" Height="24"/>
+                    break;
+                case VersionType.Waterfall:
+                    <WaterfallTypeIcon Width="24" Height="24"/>
+                    break;
+                case VersionType.Purpur:
+                    <PurpurTypeIcon Width="24" Height="24"/>
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             <!--span class="icon px-3 text-2xl">2</!--span-->
 
             @* Content *@
             <div class="flex-1">
-                <p class="text-md">@Value.Entity.Name</p>
+                <p class="text-md">@Value.Entity.EntitySettings.EntityName</p>
                 @if (Value.Entity is Server server)
                 {
                     <p class="text-sm">@(server.ServerPlayers.Count(p => p.IsOnline)) / @(server.VanillaSettings?.MaxPlayers ?? 0)</p>

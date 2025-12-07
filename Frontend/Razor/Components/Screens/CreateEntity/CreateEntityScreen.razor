@@ -38,12 +38,13 @@
             <span class="text-lg font-bold">Configure Basic Settings</span>
             <div class="px-4 pb-10">
                 <div class="flex gap-8">
-                    <ForkText Name="ServerName" @bind-Value="_serverPayload.ServerName" DisplayName="Server Name"
+                    <ForkText Name="ServerEntityName" @bind-Value="_serverPayload.ServerName"
+                              DisplayName="Server EntityName"
                               Loading="@ServerVersionsLoadingTasksByType.ContainsKey(SelectedVersionType)">
                     </ForkText>
-                    <ForkText Name="ServerName" @bind-Value="_serverPayload.VanillaSettings.LevelName"
+                    <ForkText Name="ServerEntityName" @bind-Value="_serverPayload.VanillaSettings.LevelName"
                               Loading="@ServerVersionsLoadingTasksByType.ContainsKey(SelectedVersionType)"
-                              DisplayName="World Name">
+                              DisplayName="World EntityName">
                     </ForkText>
                 </div>
                 <div class="flex gap-8">

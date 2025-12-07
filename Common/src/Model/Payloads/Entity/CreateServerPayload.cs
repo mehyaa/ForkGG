@@ -1,5 +1,5 @@
 ﻿using ForkCommon.Model.Entity.Pocos;
-using ForkCommon.Model.Entity.Pocos.ServerSettings;
+using ForkCommon.Model.Entity.Pocos.Settings;
 
 namespace ForkCommon.Model.Payloads.Entity;
 
