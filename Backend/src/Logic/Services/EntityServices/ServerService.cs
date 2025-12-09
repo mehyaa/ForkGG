@@ -161,11 +161,12 @@ public class ServerService(
                 RedirectStandardError = true,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
-                FileName = server.EntitySettings.JavaSettings.JavaPath ?? "java",
+                FileName = javaVersion.JavaPath ?? "java",
                 WorkingDirectory = serverDirectory.FullName,
-                Arguments = "-Xmx" + server.EntitySettings.JavaSettings.MaxRam + "m " +
+                Arguments = "-Dterminal.jline=false -Dterminal.ansi=true " +
+                            "-Xmx" + server.EntitySettings.JavaSettings.MaxRam + "m " +
                             server.EntitySettings.JavaSettings.StartupParameters + " -jar server.jar nogui",
-                WindowStyle = ProcessWindowStyle.Hidden,
+                WindowStyle = ProcessWindowStyle.Normal,
                 CreateNoWindow = true
             };
             process.StartInfo = startInfo;
@@ -176,8 +177,8 @@ public class ServerService(
                 status => _ = ChangeServerStatusAsync(server, status));
             server.ConsoleHandler = delegate(string line)
             {
-                console.WriteLine(server, line, ConsoleMessageType.UserInput);
-                process.StandardInput.WriteLineAsync(line);
+                process.StandardInput.WriteLine(line);
+                console.WriteLine(server, line, ConsoleMessageType.UserInput).ConfigureAwait(true);
             };
 
             //TODO CKE add server automation

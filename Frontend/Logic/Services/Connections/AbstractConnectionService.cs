@@ -100,11 +100,11 @@ public abstract class AbstractConnectionService
         Toast toast;
         if (success)
         {
-            toast = new Toast(ToastLevel.Success, successMessage, TimeSpan.FromSeconds(3));
+            toast = new Toast(ToastLevel.Success, successMessage, TimeSpan.FromSeconds(10));
         }
         else
         {
-            toast = new Toast(ToastLevel.Error, errorMessage, TimeSpan.FromSeconds(10));
+            toast = new Toast(ToastLevel.Error, errorMessage);
         }
 
         await ToastManager.AddToast(toast);
