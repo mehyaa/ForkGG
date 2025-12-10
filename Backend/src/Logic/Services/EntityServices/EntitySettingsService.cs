@@ -19,6 +19,7 @@ public class EntitySettingsService(AuthenticationService authenticationService, 
         }
 
         List<AbstractSettings> result = [];
+        result.Add(entity.EntitySettings);
         if (entity is Server { VanillaSettings: not null } server &&
             authenticationService.IsAuthenticated(typeof(ReadVanillaSettingsTabPrivilege)))
         {

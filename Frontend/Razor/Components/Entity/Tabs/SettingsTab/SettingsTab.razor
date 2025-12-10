@@ -11,9 +11,9 @@
         @foreach (AbstractSettings settings in _settingsList)
         {
             <div
-                class="px-3 flex items-center h-14 @(_selectedSettings == settings ? "bg-new-light_panel" : "text-new-offwhite hover:text-new-white")"
-                @onclick="() => _selectedSettings = settings">
-                @settings.Name.Split(".")[0]<span class="opacity-30">.@settings.Name.Split(".")[1]</span>
+                class="cursor-pointer px-3 flex items-center h-14 @(_selectedSettings == settings ? "bg-new-light_panel" : "text-new-offwhite hover:text-new-white")"
+                @onclick="() => SelectSettings(settings)">
+                @GetSettingsName(settings).Item1<span class="opacity-30">@GetSettingsName(settings).Item2</span>
             </div>
         }
     </div>
@@ -60,6 +60,11 @@
             return typeof(VanillaSettingsTab);
         }
 
+        if (settings is EntitySettings)
+        {
+            return typeof(GeneralSettingsTab);
+        }
+
         return typeof(DefaultSettingsTab);
     }
 
@@ -71,6 +76,26 @@
         {
             _selectedSettingsParameters[nameof(VanillaSettingsTab.Settings)] = settings;
         }
+
+        if (settings is EntitySettings)
+        {
+            _selectedSettingsParameters[nameof(GeneralSettingsTab.Settings)] = settings;
+        }
+    }
+
+    /**
+     * Generate name and postfix for settings names
+     */
+    private Tuple<string, string> GetSettingsName(AbstractSettings settings)
+    {
+        if (settings.Name.Contains("."))
+        {
+            string name = settings.Name.Substring(0, settings.Name.LastIndexOf(".", StringComparison.Ordinal));
+            string postfix = settings.Name.Substring(settings.Name.LastIndexOf(".", StringComparison.Ordinal));
+            return Tuple.Create(name, postfix);
+        }
+
+        return Tuple.Create(settings.Name, "");
     }
 
 }

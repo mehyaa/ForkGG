@@ -1,0 +1,43 @@
+﻿@using System.Globalization
+@inherits ForkNumber
+
+<div class="mt-5 w-full gap-1">
+    <label for="@($"{Name}")" class="text-new-offwhite opacity-75">@DisplayName</label>
+
+    <div class="flex items-center justify-between gap-4 w-full">
+        <input type="range"
+               min="@Min"
+               max="@Max"
+               id="@Name"
+               name="@Name"
+               value="@CurrentValue"
+               @oninput="OnInput"
+               class="gear-input flex-1 h-1.5 rounded-full appearance-none cursor-pointer"
+               style="--val: @(FillDecimal.ToString("0.####", CultureInfo.InvariantCulture))"/>
+        <div class="flex items-center justify-end w-20">
+            <span class="">
+                @CurrentValueAsString
+            </span>
+            <span class="text-xs font-semibold uppercase ml-1 pt-1">
+                MB
+            </span>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public required int Min { get; set; }
+    [Parameter] public required int Max { get; set; }
+
+    private double FillDecimal => Max - Min == 0 ? 0 : (double)(Value - Min) / (Max - Min);
+
+    private async Task OnInput(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int val))
+        {
+            CurrentValue = val;
+            await ValueChanged.InvokeAsync(val);
+        }
+    }
+
+}

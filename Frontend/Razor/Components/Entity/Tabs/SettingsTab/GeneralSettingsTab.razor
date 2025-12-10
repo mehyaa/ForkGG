@@ -1,0 +1,18 @@
+﻿@using ForkCommon.Model.Entity.Pocos.Settings
+<div class="grid grid-cols-1 2xl:grid-cols-2 gap-3">
+    <div class="flex flex-col">
+        <span class="text-lg font-bold">Basics</span>
+        <ForkText @bind-Value="Settings.EntityName" DisplayName="Name"/>
+        <ForkSlider @bind-Value="Settings.JavaSettings.MaxRam" DisplayName="RAM Limit" Max="5000"/>
+    </div>
+
+    <div class="flex flex-col">
+        <span class="text-lg font-bold ">Automation</span>
+        <div class="p-3 flex flex-col gap-3">
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public required EntitySettings Settings { get; set; }
+}

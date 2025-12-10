@@ -51,7 +51,7 @@ public class Server : IEntity
     [NotMapped] public List<Player.Player> Whitelist { get; set; } = new();
     [NotMapped] public List<Player.Player> Banlist { get; set; } = new();
 
-    [NotMapped] public VanillaSettings? VanillaSettings { get; set; }
+    [NotMapped] [JsonIgnore] public VanillaSettings? VanillaSettings { get; set; }
 
     [NotMapped]
     [JsonIgnore]
