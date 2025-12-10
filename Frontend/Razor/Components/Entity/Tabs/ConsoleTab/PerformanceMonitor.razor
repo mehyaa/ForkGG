@@ -1,10 +1,10 @@
 ﻿<div class="performance-container">
     <div class="performance-background clipping flex p-4 justify-center">
         <div
-            class="clipping performance-circle justify-center items-center flex flex-col overflow-visible w-20 h-20 @($"before:bg-percentage-p{ColorIntensity}")">
-            <span class="@($"text-percentage-p{ColorIntensity}") font-bold text-3xl leading-none">@Content</span>
+            class="clipping performance-circle justify-center items-center flex flex-col overflow-visible w-20 h-20 @(GetBgColorIntensityClass())">
+            <span class="@(GetColorIntensityClass()) font-bold text-3xl leading-none">@Content</span>
             <span
-                class="@($"text-percentage-p{ColorIntensity}") font-bold leading-none absolute bottom-2.5">@SubTitle</span>
+                class="@(GetColorIntensityClass()) font-bold leading-none absolute bottom-2.5">@SubTitle</span>
         </div>
         <span
             class="text-xs text-right text-label font-bold absolute bottom-0 right-0 leading-tight">@((MarkupString)(Name ?? ""))</span>
@@ -23,5 +23,67 @@
     // This is the value of the percentage color
     // One of: 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100
     [Parameter] public int? ColorIntensity { get; set; }
+
+    private string GetColorIntensityClass()
+    {
+        switch (ColorIntensity)
+        {
+            case 0:
+                return "text-percentage-p0";
+            case 10:
+                return "text-percentage-p10";
+            case 20:
+                return "text-percentage-p20";
+            case 30:
+                return "text-percentage-p30";
+            case 40:
+                return "text-percentage-p40";
+            case 50:
+                return "text-percentage-p50";
+            case 60:
+                return "text-percentage-p60";
+            case 70:
+                return "text-percentage-p70";
+            case 80:
+                return "text-percentage-p80";
+            case 90:
+                return "text-percentage-p90";
+            case 100:
+                return "text-percentage-p100";
+            default:
+                return "";
+        }
+    }
+
+    private string GetBgColorIntensityClass()
+    {
+        switch (ColorIntensity)
+        {
+            case 0:
+                return "before:bg-percentage-p0";
+            case 10:
+                return "before:bg-percentage-p10";
+            case 20:
+                return "before:bg-percentage-p20";
+            case 30:
+                return "before:bg-percentage-p30";
+            case 40:
+                return "before:bg-percentage-p40";
+            case 50:
+                return "before:bg-percentage-p50";
+            case 60:
+                return "before:bg-percentage-p60";
+            case 70:
+                return "before:bg-percentage-p70";
+            case 80:
+                return "before:bg-percentage-p80";
+            case 90:
+                return "before:bg-percentage-p90";
+            case 100:
+                return "before:bg-percentage-p100";
+            default:
+                return "";
+        }
+    }
 
 }

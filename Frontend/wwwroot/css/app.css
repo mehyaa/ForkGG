@@ -2,6 +2,10 @@
 
 @config '../../tailwind.config.js';
 
+@source inline("from-percentage-p{-1,{0..100..10}}{/10,}");
+@source inline("text-percentage-p{-1,{0..100..10}}");
+@source inline("bg-percentage-p{-1,{0..100..10}}");
+
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
@@ -362,7 +366,8 @@
     --color-scrollbar-thumb-active: #3b4059;
 
     /* -- Percentage -- */
-    --color-percentage-p0: #374FC3;
+    --color-percentage-p-1: #374FC3;
+    --color-percentage-p0: #50CE61;
     --color-percentage-p10: #50CE61;
     --color-percentage-p20: #6DC856;
     --color-percentage-p30: #92C05E;
