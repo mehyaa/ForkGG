@@ -1,9 +1,13 @@
 ﻿@using ForkCommon.Model.Entity.Pocos.Settings
+@using ForkFrontend.Logic.Services.Managers
+@inject ApplicationStateManager ApplicationState
+
 <div class="grid grid-cols-1 2xl:grid-cols-2 gap-3">
     <div class="flex flex-col">
         <span class="text-lg font-bold">Basics</span>
-        <ForkText @bind-Value="Settings.EntityName" DisplayName="Name"/>
-        <ForkSlider @bind-Value="Settings.JavaSettings.MaxRam" DisplayName="RAM Limit" Max="5000"/>
+        <ForkText Name="Name" @bind-Value="Settings.EntityName" DisplayName="Name"/>
+        <ForkSlider Name="MaxRam" @bind-Value="Settings.JavaSettings.MaxRam" DisplayName="RAM Limit" Min="512"
+                    Max="@_maxRam" Suggestions="@_suggestions"/>
     </div>
 
     <div class="flex flex-col">
@@ -15,4 +19,27 @@
 
 @code {
     [Parameter] public required EntitySettings Settings { get; set; }
+
+    private int _maxRam;
+    private List<int> _suggestions = [];
+
+    protected override Task OnInitializedAsync()
+    {
+        _maxRam = ApplicationState.ApplicationState.SystemRamMb;
+        if (_maxRam > 16384)
+        {
+            _maxRam = 16384 + 1024;
+        }
+
+        _suggestions = new List<int>();
+        int i = 2048;
+        while (i < _maxRam)
+        {
+            _suggestions.Add(i);
+            i += 2048;
+        }
+
+        return base.OnInitializedAsync();
+    }
+
 }

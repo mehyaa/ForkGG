@@ -14,4 +14,5 @@ public class State
     }
 
     public List<IEntity> Entities { get; set; }
+    public int SystemRamMb { get; set; }
 }

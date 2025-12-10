@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Fork.Logic.Managers;
+using Fork.Util;
 using ForkCommon.Model.Application;
 
 namespace Fork.Logic.Services.StateServices;
@@ -19,6 +20,7 @@ public class ApplicationStateService
     public async Task<State> BuildAppState()
     {
         State result = new(await _entityManager.ListAllEntities());
+        result.SystemRamMb = MemoryUtil.GetTotalInstalledMemory();
         return result;
     }
 }

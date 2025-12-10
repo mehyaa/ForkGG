@@ -5,15 +5,52 @@
     <label for="@($"{Name}")" class="text-new-offwhite opacity-75">@DisplayName</label>
 
     <div class="flex items-center justify-between gap-4 w-full">
-        <input type="range"
-               min="@Min"
-               max="@Max"
-               id="@Name"
-               name="@Name"
-               value="@CurrentValue"
-               @oninput="OnInput"
-               class="gear-input flex-1 h-1.5 rounded-full appearance-none cursor-pointer"
-               style="--val: @(FillDecimal.ToString("0.####", CultureInfo.InvariantCulture))"/>
+        <div class="flex-grow flex flex-col pt-1.5">
+            <input type="range"
+                   min="@Min"
+                   max="@Max"
+                   list="@ListName"
+                   id="@Name"
+                   name="@Name"
+                   value="@CurrentValue"
+                   @oninput="OnInput"
+                   class="gear-input h-1.5 rounded-full appearance-none cursor-pointer"
+                   style="--val: @(FillDecimal.ToString("0.####", CultureInfo.InvariantCulture))"/>
+
+            @if (Suggestions != null)
+            {
+                <datalist id="@ListName">
+                    @foreach (int suggestion in Suggestions)
+                    {
+                        <option value="@suggestion"></option>
+                    }
+                </datalist>
+
+                <div class="relative w-full h-6 mt-2">
+                    @foreach (int point in Suggestions)
+                    {
+                        // Calculate normalized fraction (0.0 to 1.0)
+                        double fraction = Max - Min == 0 ? 0 : (double)(point - Min) / (Max - Min);
+                        string fractionStr = fraction.ToString("0.####", CultureInfo.InvariantCulture);
+
+                        // Math: (100% width - thumbWidth) * fraction + halfThumbWidth
+                        // This ensures the label center aligns exactly with the gear center.
+                        string styleLeft = $"left: calc((100% - 24px) * {fractionStr} + 12px);";
+
+                        <div class="absolute flex flex-col items-center transform -translate-x-1/2 cursor-pointer"
+                             style="@styleLeft" @onclick="() => ClickSuggestion(point)">
+
+                            <div class="w-px h-1.5 bg-slate-700 mb-1"></div>
+
+                            <div class="text-xs font-mono text-slate-500 font-medium leading-none">
+                                @point
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
         <div class="flex items-center justify-end w-20">
             <span class="">
                 @CurrentValueAsString
@@ -28,8 +65,10 @@
 @code {
     [Parameter] public required int Min { get; set; }
     [Parameter] public required int Max { get; set; }
+    [Parameter] public List<int>? Suggestions { get; set; }
 
     private double FillDecimal => Max - Min == 0 ? 0 : (double)(Value - Min) / (Max - Min);
+    private string ListName => Name + "_list";
 
     private async Task OnInput(ChangeEventArgs e)
     {
@@ -38,6 +77,12 @@
             CurrentValue = val;
             await ValueChanged.InvokeAsync(val);
         }
+    }
+
+    private async Task ClickSuggestion(int suggestion)
+    {
+        CurrentValue = suggestion;
+        await ValueChanged.InvokeAsync(suggestion);
     }
 
 }
