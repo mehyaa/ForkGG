@@ -22,6 +22,8 @@ jobs:
         dotnet-version: 10.0.x
     - name: Restore dependencies
       run: dotnet restore
+    - name: Restore wasm workload
+      run: dotnet workload restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
