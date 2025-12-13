@@ -3,8 +3,8 @@ using System.IO;
 using Fork.Adapters.Fork;
 using Fork.Adapters.Mojang;
 using Fork.Adapters.PaperMc;
-using Fork.Adapters.Waterfall;
 using Fork.Adapters.Purpur;
+using Fork.Adapters.Waterfall;
 using Fork.Logic.Managers;
 using Fork.Logic.Notification;
 using Fork.Logic.Persistence;
@@ -23,7 +23,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -112,9 +112,12 @@ public class Startup
             c.OperationFilter<TokenSecurityFilter>();
             c.AddSecurityDefinition("Fork Token", new OpenApiSecurityScheme
             {
+                Type = SecuritySchemeType.Http,
+                Scheme = "Bearer",
+                BearerFormat = "Token",
                 In = ParameterLocation.Header,
-                Name = "Authorization",
-                Type = SecuritySchemeType.ApiKey
+                Name = "Fork Token",
+                Description = "Input your token directly"
             });
         });
         services.AddSwaggerGenNewtonsoftSupport();

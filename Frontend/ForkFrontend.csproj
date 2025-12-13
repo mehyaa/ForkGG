@@ -1,22 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RunPostBuildEvent>Always</RunPostBuildEvent>
         <ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
         <LangVersion>latestmajor</LangVersion>
         <WarningsAsErrors>Nullable</WarningsAsErrors>
+        <RunAOTCompilation>true</RunAOTCompilation>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Blazor.ContextMenu" Version="2.1.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.11"/>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.11" PrivateAssets="all"/>
-        <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1"/>
-        <PackageReference Include="Microsoft.NET.ILLink.Tasks" Version="8.0.11"/>
-        <PackageReference Include="Microsoft.NET.Sdk.WebAssembly.Pack" Version="8.0.11"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.1" PrivateAssets="all"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.1"/>
+        <PackageReference Include="Microsoft.NET.ILLink.Tasks" Version="10.0.1"/>
+        <PackageReference Include="Microsoft.NET.Sdk.WebAssembly.Pack" Version="10.0.1"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -122,5 +123,9 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Common\ForkCommon.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="ForkFrontend.snk"/>
     </ItemGroup>
 </Project>

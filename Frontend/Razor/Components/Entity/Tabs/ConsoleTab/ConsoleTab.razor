@@ -58,21 +58,19 @@
 
         <div class="flex flex-col w-24 items-center">
             <div
-                class="flex items-center justify-center w-full bg-linear-to-t from-percentage-p@(Math.Min(CpuPercentage - CpuPercentage % 10, 100))/10 to-percentage-p10/0 p-3 text-percentage-p@(Math.Min(CpuPercentage - CpuPercentage % 10, 100))">
+                class="flex items-center justify-center w-full bg-linear-to-t from-percentage-p@(GetPercentageInIncrementsOf10(CpuPercentage))/10 to-percentage-p10/0 p-3 text-percentage-p@(GetPercentageInIncrementsOf10(CpuPercentage))">
                 <span class="text-2xl font-bold">@CpuPercentage.ToString()</span>
-                <span class="text-sm opacity-75">&nbsp%</span>
             </div>
-            <div class="h-1 w-full bg-percentage-p@(Math.Min(CpuPercentage - CpuPercentage % 10, 100))"></div>
+            <div class="h-1 w-full bg-percentage-p@(GetPercentageInIncrementsOf10(CpuPercentage))"></div>
             <span class="text-sm opacity-75 mt-2">CPU</span>
         </div>
 
         <div class="flex flex-col w-24 items-center">
             <div
-                class="flex items-center justify-center w-full bg-linear-to-t from-percentage-p@(Math.Min(MemoryPercentage - MemoryPercentage % 10, 100))/10 to-percentage-p10/0 p-3 text-percentage-p@(Math.Min(MemoryPercentage - MemoryPercentage % 10, 100))">
+                class="flex items-center justify-center w-full bg-linear-to-t from-percentage-p@(GetPercentageInIncrementsOf10(MemoryPercentage))/10 to-percentage-p10/0 p-3 text-percentage-p@(GetPercentageInIncrementsOf10(MemoryPercentage))">
                 <span class="text-2xl font-bold">@MemoryPercentage.ToString()</span>
-                <span class="text-sm opacity-75">&nbsp%</span>
             </div>
-            <div class="h-1 w-full bg-percentage-p@(Math.Min(MemoryPercentage - MemoryPercentage % 10, 100))"></div>
+            <div class="h-1 w-full bg-percentage-p@(GetPercentageInIncrementsOf10(MemoryPercentage))"></div>
             <span class="text-sm opacity-75 mt-2">RAM</span>
         </div>
 
@@ -80,24 +78,13 @@
             <div
                 class="flex items-center justify-center w-full bg-linear-to-t from-percentage-p-1/10 to-percentage-p-1/0 p-3 text-percentage-p-1">
                 <span class="text-2xl font-bold">@Uptime.TotalHours.ToString("0")</span>
-                <span class="text-sm opacity-75">h</span>&nbsp
+                <span class="text-sm opacity-75">h</span>
                 <span class="text-2xl font-bold">@Uptime.Minutes.ToString("0")</span>
-                <span class="text-sm opacity-75">m</span>&nbsp
+                <span class="text-sm opacity-75">m</span>
             </div>
             <div class="h-1 w-full bg-percentage-p-1"></div>
             <span class="text-sm opacity-75 mt-2">UPTIME</span>
         </div>
-
-        @* <PerformanceMonitor Content="@CpuPercentage.ToString()" SubTitle="%" EntityName="CPU" ColorIntensity="@(Math.Min(CpuPercentage - CpuPercentage % 10, 100))"></PerformanceMonitor>
-        <div class="performance-container">
-            <PerformanceMonitor Content="@MemoryPercentage.ToString()" SubTitle="%" EntityName="RAM"
-                                ColorIntensity="@(Math.Min(MemoryPercentage - MemoryPercentage % 10, 100))"></PerformanceMonitor>
-            <div class="flex text-forkBlue-highlighted text-xs cursor-pointer">
-                <span>2048 MB</span>
-                <span class="leading-none ml-1">...</span>
-            </div>
-        </div>
-        <PerformanceMonitor Content="@($"{Uptime.TotalHours:00}:{Uptime.Minutes:00}")" SubTitle="H:M" EntityName="UP<br>TIME" ColorIntensity="0"></PerformanceMonitor> *@
     </div>
 </div>
 
@@ -134,6 +121,16 @@
         // TODO Add network support
         // Network.Port;
         return ip;
+    }
+
+    private int GetPercentageInIncrementsOf10(int percentage)
+    {
+        if (EntityState?.Entity.Status == EntityStatus.Stopped)
+        {
+            return -1;
+        }
+
+        return Math.Min(percentage - percentage % 10, 100);
     }
 
 }
