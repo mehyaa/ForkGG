@@ -5,6 +5,11 @@
 version: "1.0"
 linter: jetbrains/qodana-dotnet:latest
 bootstrap: |+
+  wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
+  chmod +x ./dotnet-install.sh
+  ./dotnet-install.sh --channel 10.0 --install-dir /usr/share/dotnet
+  
+  # Restore
   dotnet workload restore
   dotnet restore
 profile:
