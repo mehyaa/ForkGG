@@ -16,3 +16,8 @@ profile:
   name: qodana.recommended
 include:
   - name: CheckDependencyLicenses
+exclude:
+  - name: All
+    paths:
+      - Frontend/wwwroot/css
+      - Frontend/wwwroot/lib

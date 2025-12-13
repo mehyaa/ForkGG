@@ -19,6 +19,7 @@
        The center of the thumb is at: (100% - 24px) * val + 12px.
        We set the background size to exactly this width so the fill stops at the gear center.
     */
+    --val: 0;
     background-size: calc((100% - var(--thumb-size)) * var(--val) + (var(--thumb-size) / 2)) 100%;
 
     /* Remove default styles */
