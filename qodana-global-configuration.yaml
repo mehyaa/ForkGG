@@ -2,5 +2,5 @@ version: 1.0
 configurations:
   - id: Fork
     name: Fork
-    description: 
+    description: Fork application
     qodanaYaml: qodana.yaml
