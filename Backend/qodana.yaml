@@ -1,0 +1,11 @@
+version: 1.0
+configurations:
+  - id: Fork-Backend
+    name: Fork Backend
+    description: Backend application of Fork
+    qodanaYaml: Backend/qodana.yaml
+
+  - id: Fork-Frontend
+    name: Fork Frontend
+    description: Frontend WASM application of Fork
+    qodanaYaml: Frontend/qodana.yaml
