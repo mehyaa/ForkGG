@@ -4,9 +4,9 @@
 
 version: "1.0"
 linter: jetbrains/qodana-dotnet:latest
-bootstrap: 
-  - "dotnet workload restore"
-  - "dotnet restore"
+bootstrap: |+
+  dotnet workload restore
+  dotnet restore
 profile:
   name: qodana.recommended
 include:
