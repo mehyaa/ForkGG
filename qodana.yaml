@@ -3,7 +3,7 @@
 ####################################################################################################################
 
 version: "1.0"
-linter: jetbrains/qodana-dotnet:2025.2
+linter: jetbrains/qodana-dotnet:latest
 bootstrap: 
   - "dotnet workload restore"
   - "dotnet restore"
